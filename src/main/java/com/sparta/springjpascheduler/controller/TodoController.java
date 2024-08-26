@@ -1,12 +1,13 @@
 package com.sparta.springjpascheduler.controller;
 
+import com.sparta.springjpascheduler.dto.TodoRequestDto;
+import com.sparta.springjpascheduler.dto.TodoResponseDto;
 import com.sparta.springjpascheduler.entity.Todo;
 import com.sparta.springjpascheduler.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/todos")
@@ -16,20 +17,18 @@ public class TodoController {
     private TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
-        Todo savedTodo = todoService.saveTodo(todo);
-        return ResponseEntity.ok(savedTodo);
+    public TodoResponseDto createTodo(@RequestBody TodoRequestDto request) {
+        return todoService.saveTodo(request);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
-        Optional<Todo> todo = todoService.getTodoById(id);
-        return todo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public TodoResponseDto getTodoById(@PathVariable Long id) {
+        return todoService.getTodoById(id)
+                .orElseThrow(() -> new RuntimeException("Todo not found"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo updatedTodo) {
-        Todo updated = todoService.updateTodo(id, updatedTodo);
-        return ResponseEntity.ok(updated);
+    public TodoResponseDto updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto request) {
+        return todoService.updateTodo(id, request);
     }
 }

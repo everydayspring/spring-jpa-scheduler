@@ -17,15 +17,16 @@
 ## API
 ### [🔗 API Document](https://)
 
-| 기능        | Method | URL               | request | response       |
-|-----------|--------|-------------------|---------|----------------|
-| 일정 등록     | POST   | /api/todos        | body    | 등록 정보      |
-| 선택한 일정 조회 | GET    | /api/todos/{id}   | param   | 단건 응답 정보 |
-| 선택한 일정 수정 | PUT    | /api/todos/{id}   | body    | 수정 정보      |
-| 댓글 등록     | POST   | /api/comment      | body    | 등록 정보      |
-| 선택한 댓글 조회 | GET    | /api/comment/{id} | param   | 단건 응답 정보 |
-| 댓글 전체 조회  | GET    | /api/comment      | param   | 다건 응답 정보 |
-| 선택한 댓글 수정 | PUT    | /api/comment/{id} | body    | 수정 정보      |
+| 기능      | Method | URL               | request | response |
+|---------|--------|-------------------|---------|----------|
+| 일정 등록   | POST   | /api/todos        | body    | 등록 정보    |
+| 일정 단건 조회 | GET    | /api/todos/{id}   | param   | 단건 응답 정보 |
+| 일정 수정   | PUT    | /api/todos/{id}   | body    | 수정 정보    |
+| 댓글 등록   | POST   | /api/comment      | body    | 등록 정보    |
+| 댓글 단건 조회 | GET    | /api/comment/{id} | param   | 단건 응답 정보 |
+| 댓글 전체 조회 | GET    | /api/comment      | param   | 다건 응답 정보 |
+| 댓글 수정   | PUT    | /api/comment/{id} | body    | 수정 정보    |
+| 댓글 삭제   | DELETE | /api/comment/{id} | param   | 삭제 정보    |
 
 
 ## ERD

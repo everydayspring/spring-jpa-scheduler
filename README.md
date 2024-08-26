@@ -33,6 +33,6 @@
 ![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyoMty%2FbtsJgDlR8dy%2FO2pFZy6bmX8CFRJno80kK1%2Fimg.png)
 
 ## SQL
-### [🔗 schedule.sql](https://l) <br/>
-![SQL](.png)
+### [🔗 schedule.sql](https://github.com/everydayspring/spring-jpa-scheduler/blob/main/query.sql) <br/>
+![SQL](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fsw0R7%2FbtsJgEd3lJE%2FIZ1C9swPLekPZAnxhrRD2k%2Fimg.png)
 

@@ -24,12 +24,13 @@
 | 선택한 일정 수정 | PUT    | /api/scheduler/{id} | body    | 수정 정보      |
 | 댓글 등록     | POST   | /api/comment        | body    | 등록 정보      |
 | 선택한 댓글 조회 | GET    | /api/comment/{id} | param   | 단건 응답 정보 |
-| 선택한 댓긓 수정 | PUT    | /api/comment/{id} | body    | 수정 정보      |
+| 댓글 전체 조회  | GET    | /api/comment      | param   | 다건 응답 정보 |
+| 선택한 댓글 수정 | PUT    | /api/comment/{id} | body    | 수정 정보      |
 
 
 ## ERD
 ### [🔗 ERDCloud](https://) <br/>
-![ERD](.png)
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyoMty%2FbtsJgDlR8dy%2FO2pFZy6bmX8CFRJno80kK1%2Fimg.png)
 
 ## SQL
 ### [🔗 schedule.sql](https://l) <br/>

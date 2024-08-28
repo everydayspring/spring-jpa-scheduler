@@ -14,4 +14,5 @@ public class TodoResponseDto {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private int commentCnt;
 }

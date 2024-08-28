@@ -24,13 +24,13 @@ public class CommentService {
     private TodoRepository todoRepository;
 
     @Transactional
-    public CommentResponseDto saveComment(CommentRequestDto request) {
-        Todo todo = todoRepository.findById(request.getTodoId())
+    public CommentResponseDto saveComment(CommentRequestDto commentRequestDto) {
+        Todo todo = todoRepository.findById(commentRequestDto.getTodoId())
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
 
         Comment comment = new Comment();
         comment.setUserName(todo.getUserName());
-        comment.setContent(request.getContent());
+        comment.setContent(commentRequestDto.getContent());
         comment.setTodo(todo);
 
         Comment savedComment = commentRepository.save(comment);
@@ -50,11 +50,11 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponseDto updateComment(Long id, CommentRequestDto request) {
+    public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
 
-        comment.setContent(request.getContent());
+        comment.setContent(commentRequestDto.getContent());
         Comment updatedComment = commentRepository.save(comment);
 
         return mapToResponseDto(updatedComment);

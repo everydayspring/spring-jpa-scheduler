@@ -5,6 +5,7 @@ import com.sparta.springjpascheduler.dto.TodoResponseDto;
 import com.sparta.springjpascheduler.entity.Todo;
 import com.sparta.springjpascheduler.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class TodoController {
     private TodoService todoService;
 
     @PostMapping
-    public TodoResponseDto createTodo(@RequestBody TodoRequestDto request) {
-        return todoService.saveTodo(request);
+    public TodoResponseDto createTodo(@RequestBody TodoRequestDto todoRequestDto) {
+        return todoService.saveTodo(todoRequestDto);
     }
 
     @GetMapping("/{id}")
@@ -28,7 +29,12 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public TodoResponseDto updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto request) {
-        return todoService.updateTodo(id, request);
+    public TodoResponseDto updateTodo(@PathVariable Long id, @RequestBody TodoRequestDto todoRequestDto) {
+        return todoService.updateTodo(id, todoRequestDto);
+    }
+
+    @GetMapping
+    public Page<TodoResponseDto> getTodos(@RequestParam int page, @RequestParam int size){
+        return todoService.getTodos(page - 1, size);
     }
 }

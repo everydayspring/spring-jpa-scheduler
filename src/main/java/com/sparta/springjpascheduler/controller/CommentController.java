@@ -19,8 +19,8 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto request) {
-        return commentService.saveComment(request);
+    public CommentResponseDto createComment(@RequestBody CommentRequestDto commentRequestDto) {
+        return commentService.saveComment(commentRequestDto);
     }
 
     @GetMapping("/{id}")
@@ -35,8 +35,8 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public CommentResponseDto updateComment(@PathVariable Long id, @RequestBody CommentRequestDto request) {
-        return commentService.updateComment(id, request);
+    public CommentResponseDto updateComment(@PathVariable Long id, @RequestBody CommentRequestDto commentRequestDto) {
+        return commentService.updateComment(id, commentRequestDto);
     }
 
     @DeleteMapping("/{id}")

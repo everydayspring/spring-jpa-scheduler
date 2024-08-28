@@ -59,6 +59,10 @@ public class TodoService {
         return todoList.map(this::mapToResponseDto);
     }
 
+    public void deleteTodo(Long id) {
+        todoRepository.deleteById(id);
+    }
+
     private TodoResponseDto mapToResponseDto(Todo todo) {
         TodoResponseDto dto = new TodoResponseDto();
         dto.setId(todo.getId());

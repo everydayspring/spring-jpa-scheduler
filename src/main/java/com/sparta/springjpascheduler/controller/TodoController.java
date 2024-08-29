@@ -2,11 +2,9 @@ package com.sparta.springjpascheduler.controller;
 
 import com.sparta.springjpascheduler.dto.TodoRequestDto;
 import com.sparta.springjpascheduler.dto.TodoResponseDto;
-import com.sparta.springjpascheduler.entity.Todo;
 import com.sparta.springjpascheduler.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,7 +32,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public Page<TodoResponseDto> getTodos(@RequestParam int page, @RequestParam int size){
+    public Page<TodoResponseDto> getTodos(@RequestParam int page, @RequestParam int size) {
         return todoService.getTodos(page - 1, size);
     }
 

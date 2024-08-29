@@ -29,9 +29,8 @@ public class TodoService {
         todo.setUserName(todoRequestDto.getUserName());
         todo.setTitle(todoRequestDto.getTitle());
         todo.setContent(todoRequestDto.getContent());
-        Todo savedTodo = todoRepository.save(todo);
 
-        return mapToResponseDto(savedTodo);
+        return mapToResponseDto(todoRepository.save(todo));
     }
 
     @Transactional(readOnly = true)

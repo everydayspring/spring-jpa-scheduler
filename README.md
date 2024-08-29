@@ -15,30 +15,10 @@
 </div>
 
 ## API
-### [🔗 API Document](https://)
-
-| 기능        | Method  | URL               | request | response |
-|-----------|---------|-------------------|---------|----------|
-| 일정 등록     | POST    | /api/todos        | body    | 등록 정보    |
-| 일정 단건 조회  | GET     | /api/todos/{id}   | param   | 단건 응답 정보 |
-| 일정 페이징 조회 | GET     | /api/todos        | query   | 다건 응답 정보 |
-| 일정 수정     | PUT     | /api/todos/{id}   | body    | 수정 정보    |
-| 일정 삭제     | DELETE  | /api/todos/{id}   | param   |          |
-| 댓글 등록     | POST    | /api/comment      | body    | 등록 정보    |
-| 댓글 단건 조회  | GET     | /api/comment/{id} | param   | 단건 응답 정보 |
-| 댓글 전체 조회  | GET     | /api/comment      |         | 다건 응답 정보 |
-| 댓글 수정     | PUT     | /api/comment/{id} | body    | 수정 정보    |
-| 댓글 삭제     | DELETE  | /api/comment/{id} | param   |          |
-| 유저 등록     | POST    | /api/users        | body    | 등록 정보    |
-| 유저 전체 조회  | GET     | /api/users        |         | 다건 응답 정보 |
-| 유저 단건 조회  | GET     | /api/users/{id}   | param   | 단건 응답 정보 |
-| 유저 수정     | PUT     | /api/users/{id}   | body    | 수정 정보    |
-| 유저 삭제     | DELETE  | /api/users/{id}   | param   |          |
-
+### [🔗 API Document](https://documenter.getpostman.com/view/37564576/2sAXjKZBsN)
 
 ## ERD
-### [🔗 ERDCloud](https://) <br/>
-![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyoMty%2FbtsJgDlR8dy%2FO2pFZy6bmX8CFRJno80kK1%2Fimg.png)
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FGUwHd%2FbtsJlsxX0Rp%2FT0VYq76KINEN4LmxkkJbvk%2Fimg.png)
 
 ## SQL
 ### [🔗 schedule.sql](https://github.com/everydayspring/spring-jpa-scheduler/blob/main/query.sql) <br/>

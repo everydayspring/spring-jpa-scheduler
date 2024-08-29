@@ -32,7 +32,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public Page<TodoResponseDto> getTodos(@RequestParam int page, @RequestParam int size) {
+    public Page<TodoResponseDto> getTodos(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size) {
         return todoService.getTodos(page - 1, size);
     }
 

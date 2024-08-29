@@ -1,16 +1,21 @@
 package com.sparta.springjpascheduler.dto;
 
 import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 public class UserResponseDto {
-    private Long id;
-    private String userName;
-    private String email;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private final Long id;
+    private final String userName;
+    private final String email;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
+
+    public UserResponseDto(Long id, String userName, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

@@ -3,17 +3,17 @@ package com.sparta.springjpascheduler.controller;
 import com.sparta.springjpascheduler.dto.CommentRequestDto;
 import com.sparta.springjpascheduler.dto.CommentResponseDto;
 import com.sparta.springjpascheduler.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/comments")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @PostMapping
     public CommentResponseDto createComment(@RequestBody CommentRequestDto commentRequestDto) {

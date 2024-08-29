@@ -3,17 +3,17 @@ package com.sparta.springjpascheduler.controller;
 import com.sparta.springjpascheduler.dto.TodoRequestDto;
 import com.sparta.springjpascheduler.dto.TodoResponseDto;
 import com.sparta.springjpascheduler.service.TodoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/todos")
 public class TodoController {
 
-    @Autowired
-    private TodoService todoService;
+    private final TodoService todoService;
 
     @PostMapping
     public TodoResponseDto createTodo(@RequestBody TodoRequestDto todoRequestDto) {

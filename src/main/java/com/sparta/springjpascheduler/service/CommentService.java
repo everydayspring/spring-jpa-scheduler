@@ -6,7 +6,7 @@ import com.sparta.springjpascheduler.entity.Comment;
 import com.sparta.springjpascheduler.entity.Todo;
 import com.sparta.springjpascheduler.repository.CommentRepository;
 import com.sparta.springjpascheduler.repository.TodoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +15,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private TodoRepository todoRepository;
+    private final CommentRepository commentRepository;
+    private final TodoRepository todoRepository;
 
     @Transactional
     public CommentResponseDto saveComment(CommentRequestDto commentRequestDto) {
@@ -39,6 +37,10 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public Optional<CommentResponseDto> getCommentById(Long id) {
+        if (!commentRepository.existsById(id)) {
+            throw new RuntimeException("Comment not found");
+        }
+
         return commentRepository.findById(id).map(this::mapToResponseDto);
     }
 
@@ -62,17 +64,20 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Long id) {
+        if (!commentRepository.existsById(id)) {
+            throw new RuntimeException("Comment not found");
+        }
         commentRepository.deleteById(id);
     }
 
     private CommentResponseDto mapToResponseDto(Comment comment) {
-        CommentResponseDto dto = new CommentResponseDto();
-        dto.setId(comment.getId());
-        dto.setTodoId(comment.getTodo().getId());
-        dto.setUserName(comment.getUserName());
-        dto.setContent(comment.getContent());
-        dto.setCreatedAt(comment.getCreatedAt());
-        dto.setUpdatedAt(comment.getUpdatedAt());
-        return dto;
+        return new CommentResponseDto(
+                comment.getId(),
+                comment.getTodo().getId(),
+                comment.getUserName(),
+                comment.getContent(),
+                comment.getCreatedAt(),
+                comment.getModifiedAt()
+        );
     }
 }

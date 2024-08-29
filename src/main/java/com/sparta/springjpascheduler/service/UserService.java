@@ -4,7 +4,7 @@ import com.sparta.springjpascheduler.dto.UserRequestDto;
 import com.sparta.springjpascheduler.dto.UserResponseDto;
 import com.sparta.springjpascheduler.entity.User;
 import com.sparta.springjpascheduler.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public UserResponseDto saveUser(UserRequestDto userRequestDto) {
@@ -58,17 +58,19 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found");
+        }
         userRepository.deleteById(id);
     }
 
     private UserResponseDto mapToUserResponseDto(User user) {
-        UserResponseDto dto = new UserResponseDto();
-        dto.setId(user.getId());
-        dto.setUserName(user.getUserName());
-        dto.setEmail(user.getEmail());
-        dto.setCreatedAt(user.getCreatedAt());
-        dto.setUpdatedAt(user.getUpdatedAt());
-
-        return dto;
+        return new UserResponseDto(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getModifiedAt()
+        );
     }
 }

@@ -3,8 +3,9 @@ package com.sparta.springjpascheduler.service;
 import com.sparta.springjpascheduler.dto.TodoRequestDto;
 import com.sparta.springjpascheduler.dto.TodoResponseDto;
 import com.sparta.springjpascheduler.entity.Todo;
-import com.sparta.springjpascheduler.repository.CommentRepository;
+import com.sparta.springjpascheduler.entity.User;
 import com.sparta.springjpascheduler.repository.TodoRepository;
+import com.sparta.springjpascheduler.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,12 +21,15 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
-    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public TodoResponseDto saveTodo(TodoRequestDto todoRequestDto) {
+        User user = userRepository.findById(todoRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Todo todo = new Todo();
-        todo.setUserName(todoRequestDto.getUserName());
+        todo.setUser(user);
         todo.setTitle(todoRequestDto.getTitle());
         todo.setContent(todoRequestDto.getContent());
 
@@ -43,9 +47,12 @@ public class TodoService {
 
     @Transactional
     public TodoResponseDto updateTodo(Long id, TodoRequestDto todoRequestDto) {
+        User user = userRepository.findById(todoRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
-        todo.setUserName(todoRequestDto.getUserName());
+        todo.setUser(user);
         todo.setTitle(todoRequestDto.getTitle());
         todo.setContent(todoRequestDto.getContent());
         Todo updatedTodo = todoRepository.save(todo);
@@ -74,12 +81,12 @@ public class TodoService {
 
         return new TodoResponseDto(
                 todo.getId(),
-                todo.getUserName(),
+                todo.getUser().getUserName(),
                 todo.getTitle(),
                 todo.getContent(),
                 todo.getCreatedAt(),
                 todo.getModifiedAt(),
-                commentRepository.countByTodoId(todo.getId())
+                todo.getComments().size()
         );
     }
 }

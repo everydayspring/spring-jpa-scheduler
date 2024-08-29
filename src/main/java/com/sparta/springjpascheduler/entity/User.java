@@ -24,7 +24,5 @@ public class User extends Timestamped{
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "user")
-    private List<TodoUserAssignment> todoUserAssignmentsList = new ArrayList<>();
 
 }

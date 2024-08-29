@@ -27,7 +27,7 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
 
         Comment comment = new Comment();
-        comment.setUserName(todo.getUserName());
+        comment.setUserName(todo.getUser().getUserName());
         comment.setContent(commentRequestDto.getContent());
         comment.setTodo(todo);
 

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,9 @@ public class Todo extends Timestamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String userName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private String title;
@@ -32,6 +32,6 @@ public class Todo extends Timestamped{
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "todo")
-    private List<TodoUserAssignment> todoUserAssignmentsList = new ArrayList<>();
+    private List<Manager> todoUserAssignmentsList = new ArrayList<>();
 
 }

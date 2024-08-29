@@ -51,7 +51,7 @@ public class TodoService {
     }
 
     public Page<TodoResponseDto> getTodos(int page, int size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
+        Sort sort = Sort.by(Sort.Direction.DESC, "modifiedAt");
         Pageable pageable = PageRequest.of(page, size, sort);
 
         Page<Todo> todoList = todoRepository.findAll(pageable);
@@ -63,17 +63,15 @@ public class TodoService {
     }
 
     private TodoResponseDto mapToResponseDto(Todo todo) {
-        TodoResponseDto dto = new TodoResponseDto();
-        dto.setId(todo.getId());
-        dto.setUserName(todo.getUserName());
-        dto.setTitle(todo.getTitle());
-        dto.setContent(todo.getContent());
-        dto.setCreatedAt(todo.getCreatedAt());
-        dto.setUpdatedAt(todo.getUpdatedAt());
 
-        int commentCnt = commentRepository.countByTodoId(todo.getId());
-        dto.setCommentCnt(commentCnt);
-
-        return dto;
+        return new TodoResponseDto(
+                todo.getId(),
+                todo.getUserName(),
+                todo.getTitle(),
+                todo.getContent(),
+                todo.getCreatedAt(),
+                todo.getModifiedAt(),
+                commentRepository.countByTodoId(todo.getId())
+        );
     }
 }

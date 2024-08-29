@@ -66,13 +66,13 @@ public class CommentService {
     }
 
     private CommentResponseDto mapToResponseDto(Comment comment) {
-        CommentResponseDto dto = new CommentResponseDto();
-        dto.setId(comment.getId());
-        dto.setTodoId(comment.getTodo().getId());
-        dto.setUserName(comment.getUserName());
-        dto.setContent(comment.getContent());
-        dto.setCreatedAt(comment.getCreatedAt());
-        dto.setUpdatedAt(comment.getUpdatedAt());
-        return dto;
+        return new CommentResponseDto(
+                comment.getId(),
+                comment.getTodo().getId(),
+                comment.getUserName(),
+                comment.getContent(),
+                comment.getCreatedAt(),
+                comment.getModifiedAt()
+        );
     }
 }

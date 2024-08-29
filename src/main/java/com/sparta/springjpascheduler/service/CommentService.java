@@ -2,10 +2,13 @@ package com.sparta.springjpascheduler.service;
 
 import com.sparta.springjpascheduler.dto.CommentRequestDto;
 import com.sparta.springjpascheduler.dto.CommentResponseDto;
+import com.sparta.springjpascheduler.dto.UserResponseDto;
 import com.sparta.springjpascheduler.entity.Comment;
 import com.sparta.springjpascheduler.entity.Todo;
+import com.sparta.springjpascheduler.entity.User;
 import com.sparta.springjpascheduler.repository.CommentRepository;
 import com.sparta.springjpascheduler.repository.TodoRepository;
+import com.sparta.springjpascheduler.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +23,18 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public CommentResponseDto saveComment(CommentRequestDto commentRequestDto) {
         Todo todo = todoRepository.findById(commentRequestDto.getTodoId())
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
 
+        User user = userRepository.findById(commentRequestDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+
         Comment comment = new Comment();
-        comment.setUserName(todo.getUser().getUserName());
+        comment.setUser(user);
         comment.setContent(commentRequestDto.getContent());
         comment.setTodo(todo);
 
@@ -71,10 +78,10 @@ public class CommentService {
     }
 
     private CommentResponseDto mapToResponseDto(Comment comment) {
-        return new CommentResponseDto(
+ return new CommentResponseDto(
                 comment.getId(),
                 comment.getTodo().getId(),
-                comment.getUserName(),
+                comment.getUser().getId(),
                 comment.getContent(),
                 comment.getCreatedAt(),
                 comment.getModifiedAt()

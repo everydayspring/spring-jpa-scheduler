@@ -19,9 +19,7 @@ public class UserService {
 
     @Transactional
     public UserResponseDto saveUser(UserRequestDto userRequestDto) {
-        User user = new User();
-        user.setUserName(userRequestDto.getUserName());
-        user.setEmail(userRequestDto.getEmail());
+        User user = new User(userRequestDto.getUserName(), userRequestDto.getEmail());
 
         return mapToUserResponseDto(userRepository.save(user));
     }

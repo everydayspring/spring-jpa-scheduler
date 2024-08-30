@@ -34,4 +34,9 @@ public class Todo extends Timestamped{
     @OneToMany(mappedBy = "todo")
     private List<Manager> todoUserAssignmentsList = new ArrayList<>();
 
+    public Todo(User user, String title, String content) {
+        this.user = user;
+        this.title = title;
+        this.content = content;
+    }
 }

@@ -28,10 +28,7 @@ public class TodoService {
         User user = userRepository.findById(todoRequestDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Todo todo = new Todo();
-        todo.setUser(user);
-        todo.setTitle(todoRequestDto.getTitle());
-        todo.setContent(todoRequestDto.getContent());
+        Todo todo = new Todo(user, todoRequestDto.getTitle(), todoRequestDto.getContent());
 
         return mapToResponseDto(todoRepository.save(todo));
     }

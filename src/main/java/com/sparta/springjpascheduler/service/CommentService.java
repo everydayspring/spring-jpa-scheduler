@@ -33,10 +33,7 @@ public class CommentService {
         User user = userRepository.findById(commentRequestDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
 
-        Comment comment = new Comment();
-        comment.setUser(user);
-        comment.setContent(commentRequestDto.getContent());
-        comment.setTodo(todo);
+        Comment comment = new Comment(user, commentRequestDto.getContent(), todo);
 
         Comment savedComment = commentRepository.save(comment);
         return mapToResponseDto(savedComment);

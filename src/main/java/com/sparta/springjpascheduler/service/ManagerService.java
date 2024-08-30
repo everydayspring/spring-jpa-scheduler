@@ -44,9 +44,7 @@ public class ManagerService {
             throw new RuntimeException("작성자는 담당자가 될 수 없습니다");
         }
 
-        Manager manager = new Manager();
-        manager.setUser(managerUser);
-        manager.setTodo(todo);
+        Manager manager = new Manager(managerUser, todo);
 
         return mapToResponseDto(managerRepository.save(manager));
     }

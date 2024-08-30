@@ -1,12 +1,10 @@
 package com.sparta.springjpascheduler.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ManagerUpdateRequestDto {
-    private final Long userId;
-
-    public ManagerUpdateRequestDto(Long userId) {
-        this.userId = userId;
-    }
+    private Long userId;
 }

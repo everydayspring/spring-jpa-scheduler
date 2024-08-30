@@ -2,12 +2,14 @@ package com.sparta.springjpascheduler.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "todo_user_assignment")
+@NoArgsConstructor
 public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

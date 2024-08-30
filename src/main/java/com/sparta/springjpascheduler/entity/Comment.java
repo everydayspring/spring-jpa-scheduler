@@ -2,6 +2,7 @@ package com.sparta.springjpascheduler.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "comment")
+@NoArgsConstructor
 public class Comment extends Timestamped{
 
     @Id

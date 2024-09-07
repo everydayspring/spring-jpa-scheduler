@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "users")
 public class User extends Timestamped{

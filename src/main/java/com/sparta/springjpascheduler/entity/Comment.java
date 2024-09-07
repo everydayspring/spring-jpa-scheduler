@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "comment")
 @NoArgsConstructor
 public class Comment extends Timestamped{

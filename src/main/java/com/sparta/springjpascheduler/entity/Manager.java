@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "todo_user_assignment")
 @NoArgsConstructor
 public class Manager {

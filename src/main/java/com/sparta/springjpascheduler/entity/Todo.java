@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "todo")
 @NoArgsConstructor
 public class Todo extends Timestamped{

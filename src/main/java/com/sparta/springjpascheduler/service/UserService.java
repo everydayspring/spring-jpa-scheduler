@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository userRepository;
@@ -24,14 +25,12 @@ public class UserService {
         return mapToUserResponseDto(userRepository.save(user));
     }
 
-    @Transactional(readOnly = true)
     public UserResponseDto getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return mapToUserResponseDto(user);
     }
 
-    @Transactional(readOnly = true)
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(this::mapToUserResponseDto)
@@ -44,11 +43,11 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (userRequestDto.getUserName() != null && !userRequestDto.getUserName().isEmpty()) {
-            user.setUserName(userRequestDto.getUserName());
+            user.nameUpdate(userRequestDto.getUserName());
         }
 
         if (userRequestDto.getEmail() != null && !userRequestDto.getEmail().isEmpty()) {
-            user.setEmail(userRequestDto.getEmail());
+            user.emailUpdate(userRequestDto.getEmail());
         }
 
         return mapToUserResponseDto(userRepository.save(user));

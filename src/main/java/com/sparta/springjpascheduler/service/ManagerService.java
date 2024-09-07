@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
@@ -49,14 +50,12 @@ public class ManagerService {
         return mapToResponseDto(managerRepository.save(manager));
     }
 
-    @Transactional(readOnly = true)
     public List<ManagerResponseDto> getAllManagers() {
         return managerRepository.findAll().stream()
                 .map(this::mapToResponseDto)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public ManagerResponseDto getManagerById(Long id) {
         Manager manager = managerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Manager not found"));
@@ -75,11 +74,12 @@ public class ManagerService {
 
         User managerUser = userRepository.findById(managerRequestDto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        manager.setUser(managerUser);
+        manager.update(managerUser);
 
         return mapToResponseDto(managerRepository.save(manager));
     }
 
+    @Transactional
     public void deleteManager(Long id) {
         if (!managerRepository.existsById(id)) {
             throw new RuntimeException("Manager not found");

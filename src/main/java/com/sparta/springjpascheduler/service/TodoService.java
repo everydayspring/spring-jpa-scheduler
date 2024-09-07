@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TodoService {
 
     private final TodoRepository todoRepository;
@@ -33,7 +34,6 @@ public class TodoService {
         return mapToResponseDto(todoRepository.save(todo));
     }
 
-    @Transactional(readOnly = true)
     public Optional<TodoResponseDto> getTodoById(Long id) {
         if (!todoRepository.existsById(id)) {
             throw new RuntimeException("Todo not found");
@@ -49,15 +49,12 @@ public class TodoService {
 
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
-        todo.setUser(user);
-        todo.setTitle(todoRequestDto.getTitle());
-        todo.setContent(todoRequestDto.getContent());
+        todo.update(user, todoRequestDto.getTitle(), todoRequestDto.getContent());
         Todo updatedTodo = todoRepository.save(todo);
 
         return mapToResponseDto(updatedTodo);
     }
 
-    @Transactional(readOnly = true)
     public Page<TodoResponseDto> getTodos(int page, int size) {
         Sort sort = Sort.by(Sort.Direction.DESC, "modifiedAt");
         Pageable pageable = PageRequest.of(page, size, sort);

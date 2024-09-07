@@ -29,4 +29,12 @@ public class User extends Timestamped{
         this.userName = userName;
         this.email = email;
     }
+
+    public void nameUpdate(String userName) {
+        this.userName = userName;
+    }
+
+    public void emailUpdate(String email) {
+        this.email = email;
+    }
 }

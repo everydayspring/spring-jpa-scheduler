@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CommentService {
 
     private final CommentRepository commentRepository;
@@ -39,7 +40,6 @@ public class CommentService {
         return mapToResponseDto(savedComment);
     }
 
-    @Transactional(readOnly = true)
     public Optional<CommentResponseDto> getCommentById(Long id) {
         if (!commentRepository.existsById(id)) {
             throw new RuntimeException("Comment not found");
@@ -48,7 +48,6 @@ public class CommentService {
         return commentRepository.findById(id).map(this::mapToResponseDto);
     }
 
-    @Transactional(readOnly = true)
     public List<CommentResponseDto> getAllComments() {
         return commentRepository.findAll().stream()
                 .map(this::mapToResponseDto)
@@ -60,7 +59,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
 
-        comment.setContent(commentRequestDto.getContent());
+        comment.update(commentRequestDto.getContent());
         Comment updatedComment = commentRepository.save(comment);
 
         return mapToResponseDto(updatedComment);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -29,20 +30,20 @@ public class ManagerService {
     @Transactional
     public ManagerResponseDto saveManager(ManagerRequestDto managerRequestDto) {
         Todo todo = todoRepository.findById(managerRequestDto.getTodoId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         User user = userRepository.findById(managerRequestDto.getTodoUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         User managerUser = userRepository.findById(managerRequestDto.getManagerUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         if (!Objects.equals(todo.getUser().getId(), managerRequestDto.getTodoUserId())) {
-            throw new RuntimeException("올바른 작성자가 아닙니다");
+            throw new IllegalArgumentException("올바른 작성자가 아닙니다");
         }
 
         if (managerRepository.existsByTodoIdAndUserId(todo.getUser().getId(), managerRequestDto.getManagerUserId())) {
-            throw new RuntimeException("작성자는 담당자가 될 수 없습니다");
+            throw new IllegalArgumentException("작성자는 담당자가 될 수 없습니다");
         }
 
         Manager manager = new Manager(managerUser, todo);
@@ -58,22 +59,22 @@ public class ManagerService {
 
     public ManagerResponseDto getManagerById(Long id) {
         Manager manager = managerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Manager not found"));
+                .orElseThrow(() -> new NoSuchElementException("Manager not found"));
         return mapToResponseDto(manager);
     }
 
     @Transactional
     public ManagerResponseDto updateManager(Long id, ManagerUpdateRequestDto managerRequestDto) {
         Manager manager = managerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Manager not found"));
+                .orElseThrow(() -> new NoSuchElementException("Manager not found"));
 
         Todo todo = manager.getTodo();
         if (managerRepository.existsByTodoIdAndUserId(todo.getUser().getId(), managerRequestDto.getUserId())) {
-            throw new RuntimeException("작성자는 담당자가 될 수 없습니다");
+            throw new IllegalArgumentException("작성자는 담당자가 될 수 없습니다");
         }
 
         User managerUser = userRepository.findById(managerRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
         manager.update(managerUser);
 
         return mapToResponseDto(managerRepository.save(manager));
@@ -82,7 +83,7 @@ public class ManagerService {
     @Transactional
     public void deleteManager(Long id) {
         if (!managerRepository.existsById(id)) {
-            throw new RuntimeException("Manager not found");
+            throw new NoSuchElementException("Manager not found");
         }
         managerRepository.deleteById(id);
     }

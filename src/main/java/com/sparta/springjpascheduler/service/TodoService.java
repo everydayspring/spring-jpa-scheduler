@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,7 +28,7 @@ public class TodoService {
     @Transactional
     public TodoResponseDto saveTodo(TodoRequestDto todoRequestDto) {
         User user = userRepository.findById(todoRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         Todo todo = new Todo(user, todoRequestDto.getTitle(), todoRequestDto.getContent());
 
@@ -36,7 +37,7 @@ public class TodoService {
 
     public Optional<TodoResponseDto> getTodoById(Long id) {
         if (!todoRepository.existsById(id)) {
-            throw new RuntimeException("Todo not found");
+            throw new NoSuchElementException("Todo not found");
         }
 
         return todoRepository.findById(id).map(this::mapToResponseDto);
@@ -45,10 +46,10 @@ public class TodoService {
     @Transactional
     public TodoResponseDto updateTodo(Long id, TodoRequestDto todoRequestDto) {
         User user = userRepository.findById(todoRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Todo not found"));
+                .orElseThrow(() -> new NoSuchElementException("Todo not found"));
         todo.update(user, todoRequestDto.getTitle(), todoRequestDto.getContent());
         Todo updatedTodo = todoRepository.save(todo);
 
@@ -66,7 +67,7 @@ public class TodoService {
     @Transactional
     public void deleteTodo(Long id) {
         if (!todoRepository.existsById(id)) {
-            throw new RuntimeException("Todo not found");
+            throw new NoSuchElementException("Todo not found");
         }
         todoRepository.deleteById(id);
     }

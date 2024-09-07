@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,10 @@ public class CommentService {
     @Transactional
     public CommentResponseDto saveComment(CommentRequestDto commentRequestDto) {
         Todo todo = todoRepository.findById(commentRequestDto.getTodoId())
-                .orElseThrow(() -> new RuntimeException("Todo not found"));
+                .orElseThrow(() -> new NoSuchElementException("Todo not found"));
 
         User user = userRepository.findById(commentRequestDto.getUserId())
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new NoSuchElementException("Comment not found"));
 
         Comment comment = new Comment(user, commentRequestDto.getContent(), todo);
 
@@ -42,7 +43,7 @@ public class CommentService {
 
     public Optional<CommentResponseDto> getCommentById(Long id) {
         if (!commentRepository.existsById(id)) {
-            throw new RuntimeException("Comment not found");
+            throw new NoSuchElementException("Comment not found");
         }
 
         return commentRepository.findById(id).map(this::mapToResponseDto);
@@ -57,7 +58,7 @@ public class CommentService {
     @Transactional
     public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto) {
         Comment comment = commentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new NoSuchElementException("Comment not found"));
 
         comment.update(commentRequestDto.getContent());
         Comment updatedComment = commentRepository.save(comment);
@@ -68,7 +69,7 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long id) {
         if (!commentRepository.existsById(id)) {
-            throw new RuntimeException("Comment not found");
+            throw new NoSuchElementException("Comment not found");
         }
         commentRepository.deleteById(id);
     }
